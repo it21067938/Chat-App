@@ -23,7 +23,7 @@
     display: flex;
     align-items: center;
     gap: 10px;
-    padding: 10px 12px;
+    padding: 10px 10px;
     margin-top: 20px;
 }
 
@@ -69,4 +69,37 @@
     padding: 10px 20px;
     cursor: pointer;
     font-size: 11px;
+}
+
+.ls-nav .menu{
+    position: relative;
+    padding: 10px 0px;
+}
+
+.menu .sub-menu{
+    position: absolute;
+    top: 100%;
+    right: 0;
+    width: 130px;
+    padding: 8px;
+    border-radius: 5px;
+    background-color: white;
+    color: black;
+    display: none;
+}
+
+.sub-menu hr{
+    border: none;
+    height: 1px;
+    background: #001030;
+    margin: 8px 0px;
+}
+
+.sub-menu p{
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.menu:hover .sub-menu{
+    display: block;
 }
