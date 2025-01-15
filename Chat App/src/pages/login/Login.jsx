@@ -1,17 +1,35 @@
 import React, { useState } from "react";
 import "./Login.css";
 import assets from "../../assets/assets";
+import { signUp, login } from "../../config/firebase";
 
 const Login = () => {
-  const [currentState, setCurrentState] = useState("Sign Up");
+  const [currentState, setCurrentState] = useState("Login");
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState("");
+
+  const onSubmitHandler = (event) => {
+    event.preventDefault();
+    if (currentState === "Sign Up") {
+      signUp(username, email, password);
+    }
+    if (currentState === "Login") {
+      login(email, password);
+    }
+  };
+
   return (
     <div className="login">
       <img className="logo" src={assets.logo} alt="" />
-      <form className="login-form">
+      <form onSubmit={onSubmitHandler} className="login-form">
         <h2>{currentState === "Sign Up" ? "Sign Up" : "Login"}</h2>
         {currentState === "Sign Up" ? (
           <>
             <input
+              onChange={(e) => setUsername(e.target.value)}
+              value={username}
               type="text"
               placeholder="Enter Your User Name"
               className="form-input"
@@ -23,11 +41,15 @@ const Login = () => {
         )}
 
         <input
+          onChange={(e) => setEmail(e.target.value)}
+          value={email}
           type="email"
           placeholder="Enter Your Email"
           className="form-input"
         />
         <input
+          onChange={(e) => setPassword(e.target.value)}
+          value={password}
           type="password"
           placeholder="Enter Your Password"
           className="form-input"
@@ -35,17 +57,20 @@ const Login = () => {
         <button type="submit">
           {currentState === "Sign Up" ? "Sign Up" : "Login"}
         </button>
-        <div className="login-term">
-          <input type="checkbox" />
-          <p>Agree to the terms of use & privacy policy.</p>
-        </div>
+
         {currentState === "Sign Up" ? (
-          <div className="login-forgot">
-            <p className="login-toggle">
-              Already have an account{" "}
-              <span onClick={() => setCurrentState("Login")}>Login here</span>
-            </p>
-          </div>
+          <>
+            <div className="login-term">
+              <input type="checkbox" required />
+              <p>Agree to the terms of use & privacy policy.</p>
+            </div>
+            <div className="login-forgot">
+              <p className="login-toggle">
+                Already have an account{" "}
+                <span onClick={() => setCurrentState("Login")}>Login here</span>
+              </p>
+            </div>
+          </>
         ) : (
           <div className="login-forgot">
             <p className="login-toggle">
