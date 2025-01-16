@@ -12,10 +12,14 @@ import pic3 from './pic3.png'
 import pic4 from './pic4.png'
 import chatAppIcon from './chatapp.png'
 import avatar_icon from './avatar_icon.png'
+import back_icon from './back_icon.png'
+import person_icon from "./person_icon.png"
 
 const assets = {
     logo,
+    person_icon,
     chatAppIcon,
+    back_icon,
     search_icon,
     avatar_icon,
     profile_img,

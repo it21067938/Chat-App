@@ -67,3 +67,14 @@
     margin-right: 70px;
     width: 200px;
 }
+
+.profile-header{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.profile-header .backIcon{
+    width: 40px;
+    cursor: pointer;
+}

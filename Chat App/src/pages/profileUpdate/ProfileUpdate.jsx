@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./ProfileUpdate.css";
 import assets from "../../assets/assets";
 import { onAuthStateChanged } from "firebase/auth";
@@ -6,7 +6,7 @@ import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 import { auth, db } from "../../config/firebase";
 import { toast } from "react-toastify";
-import { upload } from "../../lib/upload";
+import { StoreContext } from "../../context/context";
 
 const ProfileUpdate = () => {
   const [image, setImage] = useState(false);
@@ -15,6 +15,7 @@ const ProfileUpdate = () => {
   const [uid, setUid] = useState("");
   const [previousImage, setPreviousImage] = useState("");
   const navigate = useNavigate();
+  const { setUserData } = useContext(StoreContext);
 
   useEffect(() => {
     onAuthStateChanged(auth, async (user) => {
@@ -68,12 +69,15 @@ const ProfileUpdate = () => {
         bio: bio,
         name: name,
       });
-      toast.success("Profile Update Successfully")
+
+      //update the context variable
+      const snap = await getDoc(docRef);
+      setUserData(snap.data());
+      toast.success("Profile Update Successfully");
       navigate("/chat");
     } catch (error) {
       console.log(error);
-      toast.error(error.code);
-      
+      toast.error(error.message);
     }
   };
 
@@ -81,7 +85,10 @@ const ProfileUpdate = () => {
     <div className="profile">
       <div className="profile-container">
         <form onSubmit={handleSubmit}>
-          <h3>Profile Details</h3>
+          <div className="profile-header">
+            <img onClick={() => navigate("/chat")} className="backIcon" src={assets.back_icon} alt="" />
+            <h3>Profile Details</h3>
+          </div>
           <label htmlFor="avatar">
             <input
               onChange={(e) => setImage(e.target.files[0])}

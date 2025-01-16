@@ -1,14 +1,18 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./ChatBox.css";
 import assets from "./../../assets/assets";
+import { StoreContext } from "../../context/context";
 
 const ChatBox = () => {
+
+   const {userData} = useContext(StoreContext);
+   
   return (
     <div className="chat-box">
       <div className="chat-user">
         <img src={assets.profile_img} alt="" />
         <p>
-          Kiara Harris <img src={assets.green_dot} className="dot" alt="" />
+          {userData.username} <img src={assets.green_dot} className="dot" alt="" />
         </p>
         <img src={assets.help_icon} className="help" alt="" />
       </div>

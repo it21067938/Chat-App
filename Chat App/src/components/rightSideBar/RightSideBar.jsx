@@ -1,17 +1,21 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./RightSideBar.css";
 import assets from "./../../assets/assets";
 import { logOut } from "../../config/firebase";
+import { StoreContext } from "../../context/context";
 
 const RightSideBar = () => {
+
+  const {userData} = useContext(StoreContext);
+  
   return (
     <div className="rs">
       <div className="rs-profile">
         <img src={assets.profile_img} alt="" />
         <h3>
-          Kiara Harris <img className="dot" src={assets.green_dot} alt="" />
+         {userData.username} <img className="dot" src={assets.green_dot} alt="" />
         </h3>
-        <p>Hey, There i am Kiara Harris using TalkLoop</p>
+        <p>{userData.bio}</p>
       </div>
       <hr className="rs-hr"/>
       <div className="rs-media">
