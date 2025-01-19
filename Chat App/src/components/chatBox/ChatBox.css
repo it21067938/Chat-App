@@ -2,9 +2,6 @@
     height: 7vh;
     position: relative;
     background-color: #f1f5ff;
-}
-
-.chat-user{
     padding: 10px 15px;
     display: flex;
     align-items: center;
@@ -113,4 +110,34 @@ display: flex;
     max-width: 230px;
     margin-bottom: 30px;
     border-radius: 10px;
+}
+
+.chat-welcome{
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+}
+
+.chatBox-logo{
+    width: 30%;
+    margin-left: 35%;
+    margin-top: 30%;
+}
+
+.chat-user .arrow{
+    display: none;
+}
+
+@media (max-width:900px){
+    .chat-box{
+        width: 100%;
+        justify-content: center;
+    }
+    .chat-user .arrow{
+        display: block;
+    }
+    .chat-user .help{
+        display: none;
+    }
 }

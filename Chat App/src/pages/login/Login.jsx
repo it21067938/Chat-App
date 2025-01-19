@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./Login.css";
 import assets from "../../assets/assets";
-import { signUp, login } from "../../config/firebase";
+import { signUp, login, resetPassword } from "../../config/firebase";
 
 const Login = () => {
   const [currentState, setCurrentState] = useState("Login");
@@ -18,13 +18,16 @@ const Login = () => {
     if (currentState === "Login") {
       login(email, password);
     }
+    if (currentState === "Reset") {
+      resetPassword(email);
+    }
   };
 
   return (
     <div className="login">
       <img className="logo" src={assets.logo} alt="" />
       <form onSubmit={onSubmitHandler} className="login-form">
-        <h2>{currentState === "Sign Up" ? "Sign Up" : "Login"}</h2>
+        <h2>{currentState === "Sign Up" ? "Sign Up" : currentState === "Login" ? "Login" : "Forgot Password"}</h2>
         {currentState === "Sign Up" ? (
           <>
             <input
@@ -47,15 +50,16 @@ const Login = () => {
           placeholder="Enter Your Email"
           className="form-input"
         />
+        {currentState === "Login" || "Sign up" ? 
         <input
           onChange={(e) => setPassword(e.target.value)}
           value={password}
           type="password"
           placeholder="Enter Your Password"
           className="form-input"
-        />
+        /> : <></>}
         <button type="submit">
-          {currentState === "Sign Up" ? "Sign Up" : "Login"}
+          {currentState === "Sign Up" ? "Sign Up" : currentState === "Login" ? "Login" : "Reset"}
         </button>
 
         {currentState === "Sign Up" ? (
@@ -76,6 +80,10 @@ const Login = () => {
             <p className="login-toggle">
               Create a new account?{" "}
               <span onClick={() => setCurrentState("Sign Up")}>Click here</span>
+            </p>
+            <p className="login-toggle">
+             Forgot Password?
+              <span onClick={() => setCurrentState("Reset")}> Reset here</span>
             </p>
           </div>
         )}

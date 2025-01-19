@@ -6,8 +6,15 @@ import { useNavigate } from "react-router-dom";
 export const StoreContext = createContext();
 
 export const StoreContextProvider = (props) => {
-  const [userData, setUserData] = useState("");
-  const [chatData, setChatData] = useState("");
+  const [userData, setUserData] = useState(null);
+  const [chatData, setChatData] = useState([]);
+
+  const [messageId, setMessageID] = useState(null);
+  const [messages, setMessages] = useState([]);
+  const [chatUser, setChatUser] = useState(null);
+
+  //rightside chat visible set in small screen
+  const [chatVisible, setChatVisible] = useState(false);
 
   const navigate = useNavigate();
 
@@ -41,25 +48,25 @@ export const StoreContextProvider = (props) => {
     }
   };
 
-   useEffect(() => {
+  useEffect(() => {
     if (userData) {
       const chatRef = doc(db, "chat", userData.id);
-      const unSub = onSnapshot(chatRef, async(res) => {
+      const unSub = onSnapshot(chatRef, async (res) => {
         const chatItems = res.data().chatData;
         const tempData = [];
-        for(const item of chatItems){
+        for (const item of chatItems) {
           const userRef = doc(db, "users", item.rId);
           const userSnap = await getDoc(userRef);
           const userData = userSnap.data();
-          tempData.push({...item, userData})
+          tempData.push({ ...item, userData });
         }
-        setChatData(tempData.sort((a, b) => b.updateAt - a.updateAt))
-      })
-      return () =>{
+        setChatData(tempData.sort((a, b) => b.updateAt - a.updateAt));
+      });
+      return () => {
         unSub();
-      }
+      };
     }
-   }, [userData])
+  }, [userData]);
 
   const contextValue = {
     userData,
@@ -67,6 +74,14 @@ export const StoreContextProvider = (props) => {
     chatData,
     setChatData,
     loadUserData,
+    messages,
+    setMessages,
+    messageId,
+    setMessageID,
+    chatUser,
+    setChatUser,
+    chatVisible,
+    setChatVisible,
   };
 
   return (

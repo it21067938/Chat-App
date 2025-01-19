@@ -1,19 +1,31 @@
-import React from 'react'
-import "./Chat.css"
-import LeftSideBar from './../../components/leftSideBar/LeftSideBar';
-import RightSideBar from './../../components/rightSideBar/RightSideBar';
-import ChatBox from '../../components/chatBox/ChatBox';
+import React, { useContext, useEffect, useState } from "react";
+import "./Chat.css";
+import LeftSideBar from "./../../components/leftSideBar/LeftSideBar";
+import RightSideBar from "./../../components/rightSideBar/RightSideBar";
+import ChatBox from "../../components/chatBox/ChatBox";
+import { StoreContext } from "../../context/context";
 
 const Chat = () => {
-  return (
-    <div className='chat'>
-      <div className="chat-container">
-        <LeftSideBar />
-        <ChatBox />
-        <RightSideBar />
-      </div>
-    </div>
-  )
-}
+  const { chatData, userData } = useContext(StoreContext);
+  const [loading, setLoading] = useState(true);
 
-export default Chat
+  useEffect(() => {
+    setLoading(false);
+  }, [userData, chatData]);
+
+  return (
+    <div className="chat">
+      {loading ? (
+        <p className="loading">loading</p>
+      ) : (
+        <div className="chat-container">
+          <LeftSideBar />
+          <ChatBox />
+          <RightSideBar />
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default Chat;

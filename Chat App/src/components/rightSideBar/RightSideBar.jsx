@@ -6,16 +6,16 @@ import { StoreContext } from "../../context/context";
 
 const RightSideBar = () => {
 
-  const {userData} = useContext(StoreContext);
+  const {chatUser } = useContext(StoreContext);
   
-  return (
+  return chatUser ?(
     <div className="rs">
       <div className="rs-profile">
         <img src={assets.profile_img} alt="" />
-        <h3>
-         {userData.username} <img className="dot" src={assets.green_dot} alt="" />
+        <h3>{chatUser.userData.name}
+        <img className="dot" src={assets.green_dot} alt="" />
         </h3>
-        <p>{userData.bio}</p>
+        <p>{chatUser.userData.bio}</p>
       </div>
       <hr className="rs-hr"/>
       <div className="rs-media">
@@ -31,7 +31,9 @@ const RightSideBar = () => {
       </div>
       <button onClick={() => logOut()}>Logout</button>
     </div>
-  );
+  ) : <div className="rs">
+    <button onClick={() => logOut()}>Logout</button>
+  </div>
 };
 
 export default RightSideBar;

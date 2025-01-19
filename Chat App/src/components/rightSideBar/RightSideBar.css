@@ -76,3 +76,9 @@
     cursor: pointer;
 
 }
+
+@media (max-width:900px) {
+    .rs{
+        display: none;
+    }
+}
